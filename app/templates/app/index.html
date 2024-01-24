@@ -1,1 +1,22 @@
 {% extends 'app/base.html' %}
+
+{% block content %}
+<div class="content container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron fluid-jumbotron">
+          <div class="container">
+            <h1 class="display-4">AfteriOS</h1>
+            <p class="lead">Opis partija</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
