@@ -55,3 +55,22 @@ class Recension(models.Model):
 class PartyGuest(models.Model):
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class PartyRequest(models.Model):
+    PENDING = 'PENDING'
+    APPROVED = 'APPROVED'
+    DECLINED = 'DECLINED'
+
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (APPROVED, 'Approved'),
+        (DECLINED, 'Declined'),
+    ]
+
+    party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return f"{self.user_id.username}'s request for {self.party_id} - {self.status}"
