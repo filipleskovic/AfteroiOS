@@ -1,20 +1,40 @@
-{% extends 'app/base.html' %}
-
-{% block content %}
-<div class="content container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="jumbotron fluid-jumbotron">
-          <div class="container">
-            <h1 class="display-4">AfteriOS</h1>
-            <p class="lead">Opis partija</p>
-          </div>
+{% extends 'app/base.html' %} {% block content %}
+<div class="content container-md mb-2">
+  {% for party in parties %}
+  <div class="row mt-2">
+    <div class="col-7 mx-auto">
+      <div class="card">
+        <img
+          src="{{ party.party_poster_fk.party_url }}"
+          class="card-img-top"
+          alt="..."
+        />
+        <h5 class="card-title mt-2" style="margin-left: 10px">
+          {{party.title}}
+        </h5>
+        <div class="card-body">
+          <p class="card-text">
+            <img
+              class="rounded-circle"
+              src="{{party.created_by.avatar_url}}"
+              height="40px"
+              width="40px"
+            />
+            <a href="#">
+              {{party.created_by.first_name}} {{party.created_by.last_name}}
+            </a>
+          </p>
+          <p>
+            Popunjenost:
+            {{party.partyguest_set.count}}/{{party.total_allowed_guest}}
+          </p>
+          <a href="#">
+            <button type="button" class="btn btn-primary">Detalji</button>
+          </a>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-      </div>
-    </div>
   </div>
+  {% endfor %}
+</div>
 {% endblock %}

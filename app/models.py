@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import AbstractUser
@@ -9,22 +10,22 @@ class User(AbstractUser):
     gender = models.CharField(max_length=32)
     avatar_url = models.CharField(max_length=128)
     groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
+        "auth.Group",
+        verbose_name="groups",
         blank=True,
-        related_name='afterios_group',  
+        related_name="afterios_group",
         help_text=(
-            'The groups this user belongs to. A user will get all permissions '
-            'granted to each of their groups.'
+            "The groups this user belongs to. A user will get all permissions "
+            "granted to each of their groups."
         ),
     )
 
     user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
+        "auth.Permission",
+        verbose_name="user permissions",
         blank=True,
-        related_name='afterios_permissions', 
-        help_text='Specific permissions for this user.',
+        related_name="afterios_permissions",
+        help_text="Specific permissions for this user.",
     )
 
 
@@ -34,7 +35,7 @@ class PartyPosters(models.Model):
 
 class Party(models.Model):
     title = models.CharField(max_length=128)
-    total_allowed_guest = models.SmallIntegerField
+    total_allowed_guest = models.SmallIntegerField(default=10)
     description = models.CharField(max_length=1024)
     created_at = models.DateTimeField(auto_now_add=True)
     closed_at = models.DateTimeField()
@@ -58,14 +59,14 @@ class PartyGuest(models.Model):
 
 
 class PartyRequest(models.Model):
-    PENDING = 'PENDING'
-    APPROVED = 'APPROVED'
-    DECLINED = 'DECLINED'
+    PENDING = "PENDING"
+    APPROVED = "APPROVED"
+    DECLINED = "DECLINED"
 
     STATUS_CHOICES = [
-        (PENDING, 'Pending'),
-        (APPROVED, 'Approved'),
-        (DECLINED, 'Declined'),
+        (PENDING, "Pending"),
+        (APPROVED, "Approved"),
+        (DECLINED, "Declined"),
     ]
 
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
