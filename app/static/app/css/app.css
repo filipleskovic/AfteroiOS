@@ -5,7 +5,16 @@
     background-repeat: no-repeat;
     background-size: cover;
     height: 20vh;
-  }
-  .logout-btn {
-    margin-top: 23%;
-  }
+}
+
+.logout-btn {
+    margin: 10px;
+}
+
+.login-btn {
+    margin: 10px;
+}
+
+.signup-btn {
+    margin: 10px;
+}
