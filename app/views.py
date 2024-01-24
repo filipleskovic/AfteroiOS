@@ -2,6 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from app.models import Party, PartyPosters
 
 
+def base(request):
+    user = request.user
+    context = {'user': user}
+    return render(request, 'app/base.html', context)
+
 def index(request):
     context = {"parties": Party.objects.all()}
     return render(request, "app/index.html", context)
