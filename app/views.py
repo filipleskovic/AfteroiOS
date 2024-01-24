@@ -14,3 +14,8 @@ def partyDetails(request, party_id):
         "image": party.party_poster_fk.party_url,
     }
     return render(request, "app/partyDetails.html", context)
+
+
+def userProfile(request, user_id):
+    context = {}
+    return render(request, "app/profile.html", context)
