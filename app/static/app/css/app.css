@@ -8,19 +8,36 @@
 }
 
 
+.logout-form {
+    margin-top: 20px;
+    margin-right: 15px;
+}
+
 .logout-btn {
-    margin: 10px;
+    background-color: darkred;
+    color: white;
 }
 
 .login-btn {
     margin: 10px;
+    color: green;
+    border-radius: 5px;
+    background-color: greenyellow;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .signup-btn {
     margin: 10px;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .greeting {
     width: 80px;
     margin: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
 }
