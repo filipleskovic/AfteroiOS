@@ -5,12 +5,13 @@ from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from app.forms import CustomUserForm
 
 # Create your views here.
 
 
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = CustomUserForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
