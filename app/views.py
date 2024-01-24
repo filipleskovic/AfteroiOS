@@ -1,11 +1,16 @@
-from multiprocessing import context
-from django.shortcuts import render
-
-from app.models import Party
-
-# Create your views here.
+from django.shortcuts import render, get_object_or_404
+from app.models import Party, PartyPosters
 
 
 def index(request):
     context = {"parties": Party.objects.all()}
     return render(request, "app/index.html", context)
+
+
+def partyDetails(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    context = {
+        "party": party,
+        "image": party.party_poster_fk.party_url,
+    }
+    return render(request, "app/partyDetails.html", context)

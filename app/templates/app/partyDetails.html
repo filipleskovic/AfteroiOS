@@ -1,0 +1,8 @@
+{% extends 'app/base.html' %}
+{% block content %} 
+<img src="{{image}}" alt="">
+<h1>{{party.title}}</h1>
+<p>Host: {{party.created_by.first_name}} {{party.created_by.last_name}} </p>
+<p>Party opis: {{party.description}}</p>
+<p>Vrijeme održavanja: {{party.created_at}}</p>
+{% endblock %}
