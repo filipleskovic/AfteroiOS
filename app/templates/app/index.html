@@ -20,7 +20,7 @@
               height="40px"
               width="40px"
             />
-            <a href="#">
+            <a href="{% url 'app:profile' party.created_by.id %}">
               {{party.created_by.first_name}} {{party.created_by.last_name}}
             </a>
           </p>
