@@ -28,7 +28,7 @@
             Popunjenost:
             {{party.partyguest_set.count}}/{{party.total_allowed_guest}}
           </p>
-          <a href="#">
+          <a href="{% url 'app:partyDetails' party.id %}">
             <button type="button" class="btn btn-primary">Detalji</button>
           </a>
         </div>
