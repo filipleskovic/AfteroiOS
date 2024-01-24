@@ -19,3 +19,4 @@ class SignUpView(generic.CreateView):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('app:index'))
+
