@@ -21,7 +21,8 @@ def partyDetails(request, party_id):
     user = request.user
     if user.is_authenticated:
         party_request = PartyRequest.objects.filter(user_id = user, party_id = party_id).first()
-    
+    else:
+        party_request = False
     context = {
         "party": party,
         "is_authenticated": user.is_authenticated,
