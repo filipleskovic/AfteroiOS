@@ -35,6 +35,7 @@ class PartyPosters(models.Model):
     def __str__(self) -> str:
         return f"poster num {self.id}"
 
+
 class Party(models.Model):
     title = models.CharField(max_length=128)
     total_allowed_guest = models.SmallIntegerField(default=10)
@@ -48,6 +49,7 @@ class Party(models.Model):
     def __str__(self) -> str:
         return f"{self.title}"
 
+
 class Recension(models.Model):
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -55,7 +57,7 @@ class Recension(models.Model):
     rating = models.SmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    
+
     def __str__(self) -> str:
         return f"{self.user_id.username} recension for {self.party_id.title}"
 
@@ -66,6 +68,7 @@ class PartyGuest(models.Model):
     
     def __str__(self):
         return f"user: {self.user_id.username} party: {self.party_id.title}"
+
 
 class PartyRequest(models.Model):
     PENDING = "PENDING"

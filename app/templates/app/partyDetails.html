@@ -24,12 +24,17 @@
 					Vrijeme održavanja:
 					{{party.created_at}}
 				</p>
-				<form action="{% url 'app:new_request' party.id %}" method="post">
-					<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
-					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
-					{% csrf_token %}
-				</form>
-				
+				{% if is_authenticated %}
+					{% if not party_request %}
+						<form action="{% url 'app:new_request' party.id %}" method="post">
+							<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
+							<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
+							{% csrf_token %}
+						</form>
+					{% else %}
+						<p>status zahtjeva: {{party_request.status}}</p>
+					{% endif %}
+				{% endif %}
 			</div>
 		</div>
 	</div>
