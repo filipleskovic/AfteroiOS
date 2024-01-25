@@ -1,7 +1,41 @@
 {% extends 'app/base.html' %} {% block content %}
-<img src="{{image}}" alt="" />
-<h1>{{party.title}}</h1>
-<p>Host: {{party.created_by.first_name}} {{party.created_by.last_name}}</p>
-<p>Party opis: {{party.description}}</p>
-<p>Vrijeme održavanja: {{party.created_at}}</p>
+<div class="row mt-2">
+	<div class="col-7 mx-auto">
+		<div class="card">
+			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..." />
+			<h2 class="card-title mt-2" style="margin-left: 10px">
+				{{party.title}}
+			</h2>
+			<h3 class="card-tittle mt-2" style="margin-left: 10px;">Opis:
+				{{party.description}}
+			</h3>
+			<div class="card-body">
+				<p class="card-text">
+					<img class="rounded-circle" src="{{party.created_by.avatar_url}}" height="40px" width="40px" />
+					<p>Host: <a href="#">
+						{{party.created_by.first_name}} {{party.created_by.last_name}}
+					</a></p>
+				</p>
+				<p>
+					Popunjenost:
+					{{party.partyguest_set.count}}/{{party.total_allowed_guest}}
+				</p>
+				<p>
+					Vrijeme održavanja:
+					{{party.created_at}}
+				</p>
+				<form action="{% url 'app:new_request' party.id %}" method="post">
+					<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
+					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
+					{% csrf_token %}
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
+
+
+
+

@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    date_of_birth = models.DateTimeField
+    date_of_birth = models.DateTimeField(null=True, blank=True)
     gender = models.CharField(max_length=32)
     avatar_url = models.CharField(max_length=128)
     groups = models.ManyToManyField(
@@ -81,6 +81,7 @@ class PartyRequest(models.Model):
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    text = models.CharField(max_length=1024, default="Prazno")
 
     def __str__(self):
         return f"{self.user_id.username}'s request for {self.party_id} - {self.status}"
