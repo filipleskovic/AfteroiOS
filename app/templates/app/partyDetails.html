@@ -1,6 +1,6 @@
 {% extends 'app/base.html' %} {% block content %}
 <div class="row mt-2">
-	<div class="col-7 mx-auto">
+	<div class="col-5 mx-auto">
 		<div class="card">
 			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..." />
 			<h2 class="card-title mt-2" style="margin-left: 10px">
@@ -24,12 +24,19 @@
 					Vrijeme održavanja:
 					{{party.created_at}}
 				</p>
-				<form action="{% url 'app:new_request' party.id %}" method="post">
-					<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
-					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
-					{% csrf_token %}
-				</form>
-				
+				{% if is_authenticated %}
+						{% if not party_request %}
+							<form action="{% url 'app:new_request' party.id %}" method="post">
+								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
+								<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
+								{% csrf_token %}
+							</form>
+						{% else %}
+							<p>status zahtjeva: {{party_request.status}}</p>
+						{% endif %}
+					{% else %}						
+						<p><a href="{% url 'login' %}">Prijavi se</a> kako bi mogao pristupiti partiju</p>
+				{% endif %}
 			</div>
 		</div>
 	</div>
