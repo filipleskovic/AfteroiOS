@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from app.models import Party, PartyPosters, PartyRequest
 from django.urls import reverse
+from . import forms
 
 
 def base(request):
@@ -20,7 +21,8 @@ def partyDetails(request, party_id):
     party = get_object_or_404(Party, pk=party_id)
     user = request.user
     if user.is_authenticated:
-        party_request = PartyRequest.objects.filter(user_id = user, party_id = party_id).first()
+        party_request = PartyRequest.objects.filter(
+            user_id=user, party_id=party_id).first()
     else:
         party_request = False
     context = {
@@ -48,3 +50,22 @@ def new_request(request, party_id):
         )
         partyReq.save()
     return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+
+
+def createParty(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        form = forms.PartyForm(request.POST)
+        if form.is_valid():
+            saved_party = form.save(commit=False)
+            saved_party.created_by = request.user
+            saved_party.save()
+            return HttpResponseRedirect(reverse('app:index'))
+    else:
+        form = forms.PartyForm()
+    posters = PartyPosters.objects.all()
+    context = {
+        'form': form,
+        'action': 'create',
+        'posters': posters,
+    }
+    return render(request, 'app/createParty.html', context)
