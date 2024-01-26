@@ -10,4 +10,9 @@ urlpatterns = [
     path("<int:party_id>/", views.partyDetails, name="partyDetails"),
     path("profile/<int:user_id>/", views.userProfile, name="profile"),
     path("<int:party_id>/request/new/", views.new_request, name="new_request"),
+    path(
+        "<int:req_id>/request/decision/",
+        views.requestDecision,
+        name="requestDecision",
+    ),
 ]

@@ -1,8 +1,8 @@
 {% extends 'app/base.html' %} {% block content %}
-<div class="row mt-2">
-	<div class="col-5 mx-auto">
+<div class="d-flex bd-highlight">
+	<div class="p-2 flex-fill bd-highlight">
 		<div class="card">
-			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..." />
+			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..."  />
 			<h2 class="card-title mt-2" style="margin-left: 10px">
 				{{party.title}}
 			</h2>
@@ -12,7 +12,7 @@
 			<div class="card-body">
 				<p class="card-text">
 					<img class="rounded-circle" src="{{party.created_by.avatar_url}}" height="40px" width="40px" />
-					<p>Host: <a href="#">
+				<p>Host: <a href="#">
 						{{party.created_by.first_name}} {{party.created_by.last_name}}
 					</a></p>
 				</p>
@@ -25,24 +25,42 @@
 					{{party.created_at}}
 				</p>
 				{% if is_authenticated %}
-						{% if not party_request %}
-							<form action="{% url 'app:new_request' party.id %}" method="post">
-								<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
-								<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
-								{% csrf_token %}
-							</form>
-						{% else %}
-							<p>status zahtjeva: {{party_request.status}}</p>
-						{% endif %}
-					{% else %}						
-						<p><a href="{% url 'login' %}">Prijavi se</a> kako bi mogao pristupiti partiju</p>
+				{% if party.created_by == user %}
+				<p>Ne mozes slati req na svoj party</p>
+				{% elif not party_request and party.created_by != user %}
+				<form action="{% url 'app:new_request' party.id %}" method="post">
+					<input type="text" class="form-control" aria-label="Sizing example input"
+						aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
+					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
+					{% csrf_token %}
+				</form>
+				{% else %}
+				<p>Status zahtjeva: {{party_request.status}}</p>
+				{% endif %}
+				{% else %}
+				<p><a href="{% url 'login' %}">Prijavi se</a> kako bi mogao pristupiti partiju</p>
 				{% endif %}
 			</div>
 		</div>
 	</div>
+	{% if user == party.created_by %}
+	<div class="p-2 flex-fill bd-highlight">
+		{% for req in requests %}
+		{% if req.status == "PENDING" %}
+		<div class="card">
+			<p>{{ req.user_id.username }}</p>
+			<p>{{ req.text }}</p>
+			<form action="{% url 'app:requestDecision' req.id %}" method="post">
+				<div style="display: flex;">
+				<input type="submit" class="btn btn-success" name="decision" value="Odobri">
+				<input type="submit" class="btn btn-warning" name="decision" value="Odbij">
+				{% csrf_token %}
+				</div>
+			</form>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+	{% endif %}
+	{% endblock %}
 </div>
-{% endblock %}
-
-
-
-
