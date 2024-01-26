@@ -14,10 +14,10 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 
-    {% block extrahead %} {% endblock %}
+  {% block extrahead %} {% endblock %}
 
-    <link rel="stylesheet" href="{% static 'app/css/app.css' %}" />
-  </head>
+  <link rel="stylesheet" href="{% static 'app/css/app.css' %}" />
+</head>
 
 <body class="bg-primary-subtle" style="overflow-x:hidden;">
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,7 +31,7 @@
           <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
             href="{% url 'app:profile' user.id %}">Profile</a>
           {% endif %}
-          <a class="nav-link" href="#">Create Party</a>
+          <a class="nav-link" href="{% url 'app:createParty' %}">Create Party</a>
         </div>
       </div>
     </div>
