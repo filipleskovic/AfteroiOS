@@ -19,19 +19,21 @@
   <link rel="stylesheet" href="{% static 'app/css/app.css' %}" />
 </head>
 
-<body class="bg-primary-subtle" style="overflow-x:hidden;">
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<body style="overflow-x:hidden; background-color: #90e0ef;">
+  <nav class="navbar navbar-expand-lg" style="background-color: #00b4d8;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'app:index' %}">AfteriOS</a>
+      <a class="navbar-brand" href="{% url 'app:index' %}" style="font-weight: bold;"><img
+          src="https://as1.ftcdn.net/v2/jpg/05/12/50/66/1000_F_512506612_gtoY8IvNuOIBnac4jwGYN3Nx11VMKWoC.jpg"
+          alt="Logo" width="50" height="45" class="d-inline-block align-middle">AfteriOS</a>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+          <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" style="font-weight: bold;"
             href="{% url 'app:index' %}">Home</a>
           {% if user.is_authenticated %}
-          <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+          <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" style="font-weight: bold;"
             href="{% url 'app:profile' user.id %}">Profile</a>
           {% endif %}
-          <a class="nav-link" href="{% url 'app:createParty' %}">Create Party</a>
+          <a class="nav-link" href="{% url 'app:createParty' %}" style="font-weight: bold;">Create Party</a>
         </div>
       </div>
     </div>

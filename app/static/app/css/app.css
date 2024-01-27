@@ -14,8 +14,9 @@
 }
 
 .logout-btn {
-    background-color: darkred;
+    background-color: #03045e;
     color: white;
+    border-radius: 5px;
 }
 
 .login-btn {
