@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
-from app.models import User, Party, PartyPosters
+from app.models import Recension, User, Party, PartyPosters
 from bootstrap_datepicker_plus.widgets import DatePickerInput, DateTimePickerInput
 
 
@@ -28,8 +28,15 @@ class PartyForm(ModelForm):
 
     class Meta:
         model = Party
-        fields = ['title', 'total_allowed_guest', 'description',
+        fields = ['title', 'total_allowed_guest', 'description', 'starts_at',
                   'closed_at', 'location', 'party_poster_fk']
         widgets = {
+            'starts_at': DateTimePickerInput(),
             'closed_at': DateTimePickerInput()
         }
+
+
+class RecensionForm(ModelForm):
+    class Meta:
+        model = Recension
+        fields = ['text', 'rating']

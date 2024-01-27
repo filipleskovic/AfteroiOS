@@ -20,7 +20,8 @@
     <div class="row">
         <div class="col-md-8 mx-auto my-4">
             {% include 'includes/bs_form.html' with form=form %}
-            <div class="d-inline-flex align-content-between flex-row flex-wrap" style="height: 450px; padding-top: 40px;">
+            <div class="d-inline-flex align-content-between flex-row flex-wrap"
+                style="height: 450px; padding-top: 40px;">
                 {% for poster in posters %}
                 <p class="h5" style="padding: 70px 5px;">poster num {{ poster.id }}:</p>
                 <img src="{{ poster.party_url }}" alt="partyImage">

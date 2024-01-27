@@ -2,7 +2,7 @@
 <div class="d-flex bd-highlight">
 	<div class="p-2 flex-fill bd-highlight">
 		<div class="card">
-			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..."  />
+			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..." />
 			<h2 class="card-title mt-2" style="margin-left: 10px">
 				{{party.title}}
 			</h2>
@@ -21,9 +21,32 @@
 					{{party.partyguest_set.count}}/{{party.total_allowed_guest}}
 				</p>
 				<p>
-					Vrijeme održavanja:
-					{{party.created_at}}
+					Početak party-a:
+					{{party.starts_at}}
+					<br>
+					Vrijeme zatvaranja:
+					{{party.closed_at}}
 				</p>
+				{% if party.is_finished %}
+				<p>Party je završio!<br>Ostavi recenziju:</p>
+				<form method="post" accept-charset="utf-8">
+					{% csrf_token %}
+					<div class="col-md-4">{% include 'includes/bs_form.html' with form=form %}</div>
+					<div class="d-grid gap-2 d-md-block" style="padding-left: 110px;">
+						<input type="submit" value="Podnesi" class="btn btn-primary my-3">
+					</div>
+				</form>
+				{% if recensions %}
+				<h2>Recenzije</h2>
+				<ul>
+					{% for recension in recensions %}
+					<li>{{ recension.user_id.username }}: {{ recension.text }} (Ocjena: {{ recension.rating }})</li>
+					{% endfor %}
+				</ul>
+				{% else %}
+				<p>Nema recenzija.</p>
+				{% endif %}
+				{% else %}
 				{% if is_authenticated %}
 				{% if party.created_by == user %}
 				<p>Ne mozes slati req na svoj party</p>
@@ -40,6 +63,7 @@
 				{% else %}
 				<p><a href="{% url 'login' %}">Prijavi se</a> kako bi mogao pristupiti partiju</p>
 				{% endif %}
+				{% endif %}
 			</div>
 		</div>
 	</div>
@@ -52,9 +76,9 @@
 			<p>{{ req.text }}</p>
 			<form action="{% url 'app:requestDecision' req.id %}" method="post">
 				<div style="display: flex;">
-				<input type="submit" class="btn btn-success" name="decision" value="Odobri">
-				<input type="submit" class="btn btn-warning" name="decision" value="Odbij">
-				{% csrf_token %}
+					<input type="submit" class="btn btn-success" name="decision" value="Odobri">
+					<input type="submit" class="btn btn-warning" name="decision" value="Odbij">
+					{% csrf_token %}
 				</div>
 			</form>
 		</div>
