@@ -28,7 +28,7 @@
 					{{party.closed_at}}
 				</p>
 				{% if party.is_finished %}
-				<p>Party je završio!<br>Ostavi recenziju:</p>
+				<p>Party je završio!<br>{% if user != party.created_by %}Ostavi recenziju:</p>
 				<form method="post" accept-charset="utf-8">
 					{% csrf_token %}
 					<div class="col-md-4">{% include 'includes/bs_form.html' with form=form %}</div>
@@ -36,6 +36,7 @@
 						<input type="submit" value="Podnesi" class="btn btn-primary my-3">
 					</div>
 				</form>
+				{% endif %}
 				{% if recensions %}
 				<h2>Recenzije</h2>
 				<ul>
@@ -47,16 +48,18 @@
 				<p>Nema recenzija.</p>
 				{% endif %}
 				{% else %}
-				{% if is_authenticated %}
+				{% if user.is_authenticated %}
 				{% if party.created_by == user %}
 				<p>Ne mozes slati req na svoj party</p>
-				{% elif not party_request and party.created_by != user %}
+				{% elif not party_request and party.created_by != user and party.partyguest_set.count < party.total_allowed_guest %}
 				<form action="{% url 'app:new_request' party.id %}" method="post">
 					<input type="text" class="form-control" aria-label="Sizing example input"
 						aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
 					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
 					{% csrf_token %}
 				</form>
+				{% elif party.partyguest_set.count >= party.total_allowed_guest %}
+				<p>POPUNJENO</p>
 				{% else %}
 				<p>Status zahtjeva: {{party_request.status}}</p>
 				{% endif %}

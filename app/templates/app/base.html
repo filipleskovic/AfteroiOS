@@ -38,7 +38,7 @@
       </div>
     </div>
     {% if user.is_authenticated %}
-    <a class="nav-link greeting" style="display: inline-flex; width: 150px; align-items: center;" href="#">Hi {{ user.username }}!
+    <a class="nav-link greeting" style="display: inline-flex; width: 150px; align-items: center;" href="{% url 'app:profile' user.id %}">Hi {{ user.username }}!
       {% if not user.is_superuser %}<img src="{{user.avatar_url}}" style="height: 50px; width: 50px; float: right;">{% endif %}</a>
     {% if user.is_superuser %}
     <a class="nav-link" href="/admin">Admin Dashboard</a>

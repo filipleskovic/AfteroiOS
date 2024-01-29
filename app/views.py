@@ -1,7 +1,7 @@
 from asyncio.windows_events import NULL
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from app.models import Party, PartyPosters, PartyRequest, Recension
+from app.models import Party, PartyPosters, PartyRequest, Recension, PartyGuest
 from django.urls import reverse
 from . import forms
 
@@ -99,6 +99,8 @@ def requestDecision(request, req_id):
         inputvalue = request.POST.get("decision", None)
         if inputvalue == "Odobri":
             req.status = PartyRequest.APPROVED
+            guest = PartyGuest(party_id=req.party_id, user_id=req.user_id)
+            guest.save()
         else:
             req.status = PartyRequest.DECLINED
         req.save()
