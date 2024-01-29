@@ -12,7 +12,7 @@
 			<div class="card-body">
 				<p class="card-text">
 					<img class="rounded-circle" src="{{party.created_by.avatar_url}}" height="40px" width="40px" />
-				<p>Host: <a href="#">
+				<p>Host: <a href="{% url 'app:profile' party.created_by.id %}">
 						{{party.created_by.first_name}} {{party.created_by.last_name}}
 					</a></p>
 				</p>
