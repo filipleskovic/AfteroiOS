@@ -10,8 +10,10 @@
     {% csrf_token %}
     <div class="row">
         <div class="col-md-4 mx-auto my-4">
-            {{ form.as_p }}
-            <input type="submit" value="Log in" class="btn btn-primary my-3">
+            {% include 'includes/bs_form.html' with form=form %}
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" value="Log in" class="btn btn-primary my-3">
+            </div>
         </div>
     </div>
 </form>

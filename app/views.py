@@ -1,7 +1,7 @@
 from asyncio.windows_events import NULL
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from app.models import Party, PartyPosters, PartyRequest, User, Recension
+from app.models import Party, PartyPosters, PartyRequest, Recension, PartyGuest, User
 from django.urls import reverse
 from django.db.models import Count, Avg
 from . import forms
@@ -30,11 +30,27 @@ def partyDetails(request, party_id):
         ).first()
     else:
         party_request = False
+    if request.method == "POST" and request.user.is_authenticated:
+        form = forms.RecensionForm(request.POST)
+        if form.is_valid():
+            saved_recension = form.save(commit=False)
+            saved_recension.user_id = request.user
+            saved_recension.party_id = party
+            saved_recension.save()
+            return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+    else:
+        form = forms.RecensionForm()
+    if not party.is_finished():
+        recensions = None
+    else:
+        recensions = Recension.objects.filter(party_id=party)
     context = {
         "party": party,
         "is_authenticated": user.is_authenticated,
         "party_request": party_request,
         "requests": requests,
+        "recensions": recensions,
+        "form": form,
     }
     return render(request, "app/partyDetails.html", context)
 
@@ -120,6 +136,8 @@ def requestDecision(request, req_id):
         inputvalue = request.POST.get("decision", None)
         if inputvalue == "Odobri":
             req.status = PartyRequest.APPROVED
+            guest = PartyGuest(party_id=req.party_id, user_id=req.user_id)
+            guest.save()
         else:
             req.status = PartyRequest.DECLINED
         req.save()

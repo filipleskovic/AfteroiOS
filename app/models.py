@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import timedelta
+from django.utils import timezone
 from email.policy import default
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -51,10 +52,14 @@ class Party(models.Model):
     total_allowed_guest = models.SmallIntegerField(default=10)
     description = models.CharField(max_length=1024)
     created_at = models.DateTimeField(auto_now_add=True)
+    starts_at = models.DateTimeField()
     closed_at = models.DateTimeField()
     location = models.CharField(max_length=128)
     party_poster_fk = models.ForeignKey(PartyPosters, on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def is_finished(self):
+        return timezone.now() + timedelta(hours=1) > self.closed_at
 
     def __str__(self) -> str:
         return f"{self.title}"
