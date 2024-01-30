@@ -1,3 +1,226 @@
 {% extends 'app/base.html' %} {% block content %}
-<p>hello from profile</p>
+<div>
+  <div class="grid-container">
+    <div class="grid-item">
+      <img
+        class="rounded-circle shadow-4-strong"
+        src="{{ user_data.avatar_url }}"
+        alt="avatar"
+        height="200px"
+        width="200px"
+      />
+      <p>{{ user_data.first_name }} {{ user_data.last_name }}</p>
+      <label>Datum rođenja:</label>
+      <p>{{ user_data.date_of_birth }}</p>
+      <label>Spol:</label>
+      <p>{{ user_data.gender }}</p>
+      <label>Ukupno aftera održano:</label>
+      <p>{{ total_parties }}</p>
+      <label>Prosječna ocjena:</label>
+      <p>{{ average_rating }}</p>
+    </div>
+    <div class="grid-item">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="pills-current-parties-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-current-parties"
+            type="button"
+            role="tab"
+            aria-controls="pills-current-parties"
+            aria-selected="true"
+          >
+            Trenutni partiji
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-previous-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-previous"
+            type="button"
+            role="tab"
+            aria-controls="pills-previous"
+            aria-selected="false"
+          >
+            Prethodni partiji
+          </button>
+        </li>
+      </ul>
+      <div
+        class="tab-content"
+        id="pills-tabContent"
+        style="height: calc(100% - 60px); overflow-y: scroll"
+      >
+        <div
+          class="tab-pane fade show active"
+          id="pills-current-parties"
+          role="tabpanel"
+          aria-labelledby="pills-current-parties-tab"
+        >
+          <div class="accordion" id="accordionExample">
+            {% for party in current_parties %}
+            <div class="accordion-item">
+              <h2
+                class="accordion-header"
+                id="heading{{party.party_details.id}}"
+              >
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse{{party.party_details.id}}"
+                  aria-expanded="false"
+                  aria-controls="collapse{{party.party_details.id}}"
+                  style="align-items: flex-end; background: white"
+                >
+                  <img
+                    src="{{party.party_details.party_poster_fk.party_url}}"
+                    height="150px"
+                    width="200px"
+                  />
+                  <div style="margin-left: 10px">
+                    <p>Naslov: {{party.party_details.title}}</p>
+                    <p>Zatvara se: {{party.party_details.closed_at}}</p>
+                    <p style="margin-bottom: 0">
+                      By: {{party.party_details.created_by.first_name}}
+                      {{party.party_details.created_by.last_name}}
+                    </p>
+                  </div>
+                </button>
+              </h2>
+              <div
+                id="collapse{{party.party_details.id}}"
+                class="accordion-collapse collapse"
+                aria-labelledby="heading{{party.party_details.id}}"
+                data-bs-parent="#accordionExample"
+              >
+                <div
+                  class="accordion-body"
+                >
+                  {% for recension in party.recensions %}
+                  <div style="width: 100%; padding: 10px">
+                    <div style="display: flex; align-items: flex-end">
+                      <img
+                        class="rounded-circle"
+                        src="{{recension.user_id.avatar_url}}"
+                        alt="avatar"
+                        height="50px"
+                        width="50px"
+                      />
+                      <p style="margin-left: 5px">
+                        {{recension.user_id.first_name}}
+                        {{recension.user_id.last_name}}
+                      </p>
+                    </div>
+                    <div
+                      style="
+                        width: 100%;
+                        height: 150px;
+                        border: 1px solid black;
+                        border-radius: 5px;
+                        padding: 10px;
+                      "
+                    >
+                      {{recension.text}}
+                    </div>
+                    <p>{{recension.rating}}/5</p>
+                  </div>
+                  {% empty %}
+                  <p>Trenutno nema recenzija za ovaj parti</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="pills-previous"
+          role="tabpanel"
+          aria-labelledby="pills-previous-tab"
+        >
+          <div class="accordion" id="accordionExample">
+            {% for party in previous_parties %}
+            <div class="accordion-item">
+              <h2
+                class="accordion-header"
+                id="heading{{party.party_details.id}}"
+              >
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse{{party.party_details.id}}"
+                  aria-expanded="false"
+                  aria-controls="collapse{{party.party_details.id}}"
+                  style="align-items: flex-end; background: white"
+                >
+                  <img
+                    src="{{party.party_details.party_poster_fk.party_url}}"
+                    height="150px"
+                    width="200px"
+                  />
+                  <div style="margin-left: 10px">
+                    <p>Naslov: {{party.party_details.title}}</p>
+                    <p>Zatvara se: {{party.party_details.closed_at}}</p>
+                    <p style="margin-bottom: 0">
+                      By: {{party.party_details.created_by.first_name}}
+                      {{party.party_details.created_by.last_name}}
+                    </p>
+                  </div>
+                </button>
+              </h2>
+              <div
+                id="collapse{{party.party_details.id}}"
+                class="accordion-collapse collapse"
+                aria-labelledby="heading{{party.party_details.id}}"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  {% for recension in party.recensions %}
+                  <div style="width: 100%; padding: 10px">
+                    <div style="display: flex; align-items: flex-end">
+                      <img
+                        class="rounded-circle"
+                        src="{{recension.user_id.avatar_url}}"
+                        alt="avatar"
+                        height="50px"
+                        width="50px"
+                      />
+                      <p style="margin-left: 5px">
+                        {{recension.user_id.first_name}}
+                        {{recension.user_id.last_name}}
+                      </p>
+                    </div>
+                    <div
+                      style="
+                        width: 100%;
+                        height: 150px;
+                        border: 1px solid black;
+                        border-radius: 5px;
+                        padding: 10px;
+                      "
+                    >
+                      {{recension.text}}
+                    </div>
+                    <p>{{recension.rating}}/5</p>
+                  </div>
+                  {% empty %}
+                  <p>Trenutno nema recenzija za ovaj parti</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

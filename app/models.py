@@ -1,3 +1,4 @@
+from datetime import datetime
 from email.policy import default
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -27,7 +28,16 @@ class User(AbstractUser):
         related_name="afterios_permissions",
         help_text="Specific permissions for this user.",
     )
+    
+    def get_previous_parties(self):
+        current_datetime = datetime.now()
+        previous_parties = Party.objects.filter(created_by=self, closed_at__lt=current_datetime)
+        return previous_parties
 
+    def get_current_parties(self):
+        current_datetime = datetime.now()
+        previous_parties = Party.objects.filter(created_by=self, closed_at__gt=current_datetime)
+        return previous_parties
 
 class PartyPosters(models.Model):
     party_url = models.CharField(max_length=128)
@@ -65,7 +75,7 @@ class Recension(models.Model):
 class PartyGuest(models.Model):
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return f"user: {self.user_id.username} party: {self.party_id.title}"
 

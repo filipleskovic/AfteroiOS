@@ -1,0 +1,22 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 30% 65%;
+  justify-content: space-around;
+}
+
+.grid-item {
+  margin-top: calc(7.5dvh - 48px);
+  height: 85dvh;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+p{
+  margin: 0;
+}
+
+.accordion-body{
+  max-height: 300px;
+  overflow-y: auto;
+}
