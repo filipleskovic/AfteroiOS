@@ -3,7 +3,13 @@
   {% for party in parties %}
   <div class="row mt-2">
     <div class="col-6 mx-auto">
-      <div class="card p-2">
+      <div
+        class="card p-2"
+        style="
+          background-color: #f2f2f2f2;
+          box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        "
+      >
         <img
           src="{{ party.party_poster_fk.party_url }}"
           class="card-img-top"
@@ -18,19 +24,20 @@
               height="50px"
               width="50px"
             />
-            <a style="margin-left: 5px;" href="{% url 'app:profile' party.created_by.id %}">
+            <a
+              style="margin-left: 5px"
+              href="{% url 'app:profile' party.created_by.id %}"
+            >
               {{party.created_by.first_name}}<br />
               {{party.created_by.last_name}}
             </a>
           </div>
-          <p class="mt-2">
-            {{party.description}}
-          </p>
+          <p class="mt-2">{{party.description}}</p>
           <p class="mt-2">
             <i class="fa-solid fa-user-group"></i>
             {{party.partyguest_set.count}}/{{party.total_allowed_guest}}
           </p>
-          <a style="float: right;" href="{% url 'app:partyDetails' party.id %}">
+          <a style="float: right" href="{% url 'app:partyDetails' party.id %}">
             <button type="button" class="btn btn-primary">Detalji</button>
           </a>
         </div>

@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
+  --surface: "#FFFFFF";
+  --card: "#DBDBDB"
 }
 
 .body-custom {
@@ -53,14 +55,14 @@
 }
 
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #6d7071;
+  background-color: #9da2a4;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;

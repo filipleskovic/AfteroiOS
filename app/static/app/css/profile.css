@@ -1,22 +1,36 @@
 .grid-container {
   display: grid;
-  grid-template-columns: 30% 65%;
+  grid-template-columns: minmax(20%, 30%) 65%;
   justify-content: space-around;
+  align-items: start;
 }
 
 .grid-item {
-  margin-top: calc(7.5dvh - 48px);
-  height: 85dvh;
-  border: 1px solid black;
-  border-radius: 10px;
+  background-color: #f2f2f2f2;
+  margin-top: calc(7.5dvh - 36px);
+  max-height: 85dvh;
   padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
-p{
+.profile-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+p {
   margin: 0;
 }
 
-.accordion-body{
+.accordion-body {
   max-height: 300px;
   overflow-y: auto;
 }
