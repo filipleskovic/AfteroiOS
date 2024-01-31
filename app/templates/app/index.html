@@ -1,6 +1,7 @@
 {% extends 'app/base.html' %} {% block content %}
 <div class="content container-md mb-2">
   {% for party in parties %}
+  {% if not party.is_finished %}
   <div class="row mt-2">
     <div class="col-6 mx-auto">
       <div
@@ -44,6 +45,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
   {% endfor %}
 </div>
 {% endblock %}
