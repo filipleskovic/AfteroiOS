@@ -9,7 +9,7 @@
           alt="avatar"
           height="200px"
           width="200px"
-          style="align-self: center;"
+          style="align-self: center"
         />
         <label class="mt-2">Ime Prezime:</label>
         <h4>{{ user_data.first_name }} {{ user_data.last_name }}</h4>
@@ -53,6 +53,20 @@
             Prethodni partiji
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-my-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-my"
+            type="button"
+            role="tab"
+            aria-controls="pills-my"
+            aria-selected="false"
+          >
+            Moja sudjelovanja
+          </button>
+        </li>
       </ul>
       <div
         class="tab-content"
@@ -65,13 +79,12 @@
           role="tabpanel"
           aria-labelledby="pills-current-parties-tab"
         >
-          <div class="accordion" id="accordionExample" >
+          <div class="accordion" id="accordionExample">
             {% for party in current_parties %}
             <div class="accordion-item">
               <h2
                 class="accordion-header"
                 id="heading{{party.party_details.id}}"
-                
               >
                 <button
                   class="accordion-button"
@@ -80,7 +93,7 @@
                   data-bs-target="#collapse{{party.party_details.id}}"
                   aria-expanded="false"
                   aria-controls="collapse{{party.party_details.id}}"
-                  style="align-items: flex-end; background: #e1e1e1;"
+                  style="align-items: flex-end; background: #e1e1e1"
                 >
                   <img
                     src="{{party.party_details.party_poster_fk.party_url}}"
@@ -103,7 +116,7 @@
                 aria-labelledby="heading{{party.party_details.id}}"
                 data-bs-parent="#accordionExample"
               >
-                <div class="accordion-body" >
+                <div class="accordion-body">
                   {% for recension in party.recensions %}
                   <div style="width: 100%; padding: 10px">
                     <div style="display: flex; align-items: flex-end">
@@ -161,7 +174,7 @@
                   data-bs-target="#collapse{{party.party_details.id}}"
                   aria-expanded="false"
                   aria-controls="collapse{{party.party_details.id}}"
-                  style="align-items: flex-end; background: #e1e1e1;"
+                  style="align-items: flex-end; background: #e1e1e1"
                 >
                   <img
                     src="{{party.party_details.party_poster_fk.party_url}}"
@@ -204,7 +217,88 @@
                       style="
                         width: 100%;
                         max-height: 150px;
-                        overflow-y:auto;
+                        overflow-y: auto;
+                        border: 1px solid black;
+                        border-radius: 5px;
+                        padding: 10px;
+                      "
+                    >
+                      {{recension.text}}
+                    </div>
+                    <p>{{recension.rating}}/5</p>
+                  </div>
+                  {% empty %}
+                  <p>Trenutno nema recenzija za ovaj parti</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div
+          class="tab-pane fade show active"
+          id="pills-my-parties"
+          role="tabpanel"
+          aria-labelledby="pills-my-parties-tab"
+        >
+          <div class="accordion" id="accordionExample">
+            {% for party in attended_parties %}
+            <div class="accordion-item">
+              <h2
+                class="accordion-header"
+                id="heading{{party.party_details.id}}"
+              >
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse{{party.party_details.id}}"
+                  aria-expanded="false"
+                  aria-controls="collapse{{party.party_details.id}}"
+                  style="align-items: flex-end; background: #e1e1e1"
+                >
+                  <img
+                    src="{{party.party_details.party_poster_fk.party_url}}"
+                    height="150px"
+                    width="200px"
+                  />
+                  <div style="margin-left: 10px">
+                    <p>Naslov: {{party.party_details.title}}</p>
+                    <p>Zatvara se: {{party.party_details.closed_at}}</p>
+                    <p style="margin-bottom: 0">
+                      By: {{party.party_details.created_by.first_name}}
+                      {{party.party_details.created_by.last_name}}
+                    </p>
+                  </div>
+                </button>
+              </h2>
+              <div
+                id="collapse{{party.party_details.id}}"
+                class="accordion-collapse collapse"
+                aria-labelledby="heading{{party.party_details.id}}"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  {% for recension in party.recensions %}
+                  <div style="width: 100%; padding: 10px">
+                    <div style="display: flex; align-items: flex-end">
+                      <img
+                        class="rounded-circle"
+                        src="{{recension.user_id.avatar_url}}"
+                        alt="avatar"
+                        height="50px"
+                        width="50px"
+                      />
+                      <p style="margin-left: 5px">
+                        {{recension.user_id.first_name}}
+                        {{recension.user_id.last_name}}
+                      </p>
+                    </div>
+                    <div
+                      style="
+                        width: 100%;
+                        height: 150px;
                         border: 1px solid black;
                         border-radius: 5px;
                         padding: 10px;
