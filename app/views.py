@@ -93,8 +93,10 @@ def userProfile(request, user_id):
     parties = Party.objects.filter(created_by=user_id)
     total_parties = parties.count()
     user_recensions = Recension.objects.filter(party_id__in=parties)
-    average_rating = round(user_recensions.aggregate(Avg("rating"))["rating__avg"],2)
-
+    if user_recensions.aggregate(Avg("rating"))["rating__avg"] != None:
+        average_rating = round(user_recensions.aggregate(Avg("rating"))["rating__avg"],2)
+    else:
+        average_rating = None
     previous_parties = user_data.get_previous_parties()
     current_parties = user_data.get_current_parties()
     attended_parties = user_data.get_attended_parties()
