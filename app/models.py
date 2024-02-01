@@ -80,6 +80,8 @@ class Party(models.Model):
     def __str__(self) -> str:
         return f"{self.title}"
 
+    def description_snippet(self):
+        return f"{self.description[:50]}..."
 
 class Recension(models.Model):
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
