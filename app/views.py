@@ -66,6 +66,7 @@ def userProfile(request, user_id):
 
     previous_parties = user_data.get_previous_parties()
     current_parties = user_data.get_current_parties()
+    attended_parties = user_data.get_attended_parties()
 
     previous_parties_dto = []
 
@@ -87,6 +88,16 @@ def userProfile(request, user_id):
             }
         )
 
+    attended_parties_dto = []
+
+    for party in attended_parties:
+        attended_parties_dto.append(
+            {
+                "party_details": party,
+                "recensions": Recension.objects.filter(party_id=party.id),
+            }
+        )
+
     context = {
         "user_data": user_data,
         "parties": parties,
@@ -94,6 +105,7 @@ def userProfile(request, user_id):
         "average_rating": average_rating,
         "previous_parties": previous_parties_dto,
         "current_parties": current_parties_dto,
+        "attended_parties": attended_parties_dto,
     }
     return render(request, "app/profile.html", context)
 

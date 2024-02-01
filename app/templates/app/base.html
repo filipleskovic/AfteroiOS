@@ -42,46 +42,88 @@
     />
   </head>
 
-<body style="overflow-x:hidden; background-color: white;">
-  <nav class="navbar navbar-expand-lg" style="background-color: #F2F2F2;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'app:index' %}" style="font-weight: bold;"><img
-          src="https://as1.ftcdn.net/v2/jpg/05/12/50/66/1000_F_512506612_gtoY8IvNuOIBnac4jwGYN3Nx11VMKWoC.jpg"
-          alt="Logo" width="50" height="45" class="d-inline-block align-middle" style="margin-right: 10px;">AfteriOS</a>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
-            style="font-weight: bold;" href="{% url 'app:index' %}">Home</a>
-          {% if user.is_authenticated %}
-          <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
-            style="font-weight: bold;" href="{% url 'app:profile' user.id %}">Profile</a>
-          <a class="nav-link" href="{% url 'app:createParty' %}" style="font-weight: bold;">Create Party</a>
-          {% endif %}
+  <body style="overflow-x: hidden; background-color: white">
+    <nav class="navbar navbar-expand-lg" style="background-color: #f2f2f2">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          href="{% url 'app:index' %}"
+          style="font-weight: bold"
+          ><img
+            src="https://as1.ftcdn.net/v2/jpg/05/12/50/66/1000_F_512506612_gtoY8IvNuOIBnac4jwGYN3Nx11VMKWoC.jpg"
+            alt="Logo"
+            width="50"
+            height="45"
+            class="d-inline-block align-middle"
+            style="margin-right: 10px"
+          />AfteriOS</a
+        >
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a
+              class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+              style="font-weight: bold"
+              href="{% url 'app:index' %}"
+              >Home</a
+            >
+            {% if user.is_authenticated %}
+            <a
+              class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+              style="font-weight: bold"
+              href="{% url 'app:profile' user.id %}"
+              >Profile</a
+            >
+            <a
+              class="nav-link"
+              href="{% url 'app:createParty' %}"
+              style="font-weight: bold"
+              >Create Party</a
+            >
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-    {% if user.is_authenticated %}
-    <a class="nav-link greeting" style="display: inline-flex; width: 150px; align-items: center;"
-      href="{% url 'app:profile' user.id %}">Hi {{ user.username }}!
-      {% if not user.is_superuser %}<img src="{{user.avatar_url}}" style="height: 50px; width: 50px; float: right;">
-      {% endif %}</a>
-    {% if user.is_superuser %}
-    <a class="nav-link" href="/admin">Admin Dashboard</a>
-    {% endif %}
-    <form action="{% url 'accounts:logout' %}" method="POST" id="logout" class="nav-link logout-form">
-      {% csrf_token %}
-      <input type="submit" value="Logout" class="logout-btn" />
-    </form>
-    {% else %}
-    <a class="nav-link login-btn" href="{% url 'login' %}">Login</a>
-    <a class="nav-link signup-btn" href="{% url 'accounts:signup' %}">Signup</a>
-    {% endif %}
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </nav>
-  {% block content %} {% endblock %}
-</body>
-
+      {% if user.is_authenticated %}
+      <a
+        class="nav-link greeting"
+        style="display: inline-flex; width: 150px; align-items: center"
+        href="{% url 'app:profile' user.id %}"
+      >
+        {% if not user.is_superuser %}<img
+          src="{{user.avatar_url}}"
+          style="height: 50px; width: 50px; float: right"
+        />{% endif %}</a
+      >
+      {% if user.is_superuser %}
+      <a class="nav-link" href="/admin">Admin Dashboard</a>
+      {% endif %}
+      <form
+        action="{% url 'accounts:logout' %}"
+        method="POST"
+        id="logout"
+        class="nav-link logout-form"
+      >
+        {% csrf_token %}
+        <input type="submit" value="Logout" class="logout-btn" />
+      </form>
+      {% else %}
+      <a class="nav-link login-btn" href="{% url 'login' %}">Login</a>
+      <a class="nav-link signup-btn" href="{% url 'accounts:signup' %}"
+        >Signup</a
+      >
+      {% endif %}
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
 </html>
