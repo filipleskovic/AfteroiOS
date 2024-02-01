@@ -6,7 +6,7 @@
 			<h2 class="card-title mt-2" style="margin-left: 10px">
 				{{party.title}}
 			</h2>
-			<h3 class="card-tittle mt-2" style="margin-left: 10px;">Opis:</h3>
+			<h3 class="card-tittle mt-2" style="margin-left: 10px;">Description:</h3>
 			<div class="scrollable-div">
 				<p>{{party.description}}</p>
 			</div>
@@ -18,19 +18,19 @@
 					</a></p>
 				</p>
 				<p>
-					Popunjenost:
+					Occupancy:
 					{{party.partyguest_set.count}}/{{party.total_allowed_guest}}
 				</p>
 				<p>
-					Početak party-a:
+					Party starts at:
 					{{party.starts_at}}
 					<br>
-					Vrijeme zatvaranja:
+					Party closes at:
 					{{party.closed_at}}
 				</p>
 				{% if party.is_finished %}
-				<p style="font-weight: bold;">Party je završio!<br>
-					{% if user != party.created_by and user == guest.user_id %}Ostavi recenziju:</p>
+				<p style="font-weight: bold;">Party finished!<br>
+					{% if user != party.created_by and user == guest.user_id %}Leave a recension:</p>
 				{% if user.is_authenticated %}
 				<form action="{% url 'app:new_recension' party.id %}" method="post" accept-charset="utf-8"
 					style="margin:20px 0px 20px;">
@@ -38,56 +38,56 @@
 						<div class="p-0 flex-grow-1 bd-highlight">
 							<input type="text" class="form-control" aria-label="Sizing example input"
 								aria-describedby="inputGroup-sizing-default" name="text" id=""
-								style="margin-bottom:10px" placeholder="Text recenzije">
+								style="margin-bottom:10px" placeholder="Text">
 						</div>
 						<div class="p-1 bd-highlight"> </div>
 						<div class="p-0 flex-grow-1 bd-highlight">
 							<input type="number" class="form-control" aria-label="Sizing example input"
 								aria-describedby="inputGroup-sizing-default" name="ocjena" id="" min="1" max="5"
-								style="margin-bottom:10px" placeholder="Ocjena">
+								style="margin-bottom:10px" placeholder="Rating">
 						</div>
 					</div>
-					<input type="submit" class="btn btn-primary" value="Ocjeni">
+					<input type="submit" class="btn btn-primary" value="Rate">
 					{% csrf_token %}
 				</form>
 				{% endif %}
 				{% endif %}
 				{% if recensions %}
-				<h2>Recenzije</h2>
+				<h2>Recensions</h2>
 				<ul>
 					{% for recension in recensions %}
 					<li>
 						<p style="font-weight: bold;">{{ recension.user_id.username }}:</p> {{ recension.text }}
-						<strong>(Ocjena: {{ recension.rating }})</strong>
+						<strong>(Rating: {{ recension.rating }})</strong>
 					</li>
 					{% endfor %}
 				</ul>
 				{% else %}
-				<p>Nema recenzija.</p>
+				<p>No recensions yet</p>
 				{% endif %}
 				{% else %}
 				{% if user.is_authenticated %}
 				{% if party.created_by == user %}
 				<form action="{% url 'app:editParty' party.id %}" method="get">
-					<input type="submit" class="btn btn-primary" name="uredi" value="Uredi party" style="margin:5px;">
+					<input type="submit" class="btn btn-primary" name="uredi" value="Edit party" style="margin:5px;">
 					{% csrf_token %}
 				</form>
 				{% elif not party_request and party.created_by != user and party.partyguest_set.count < party.total_allowed_guest %} <form action="{% url 'app:new_request' party.id %}" method="post">
 					<input type="text" class="form-control" aria-label="Sizing example input"
 						aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
-					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
+					<input type="submit" class="btn btn-primary" value="Send request">
 					{% csrf_token %}
 					</form>
 					{% elif party.partyguest_set.count >= party.total_allowed_guest %}
-					<p style="font-size: 25px; font-weight: 600; color: red;">POPUNJENO!</p>
+					<p style="font-size: 25px; font-weight: 600; color: red;">PARTY IS FULL!</p>
 					{% else %}
-					<p>Status zahtjeva: {{party_request.status}}</p>
+					<p>Request status: {{party_request.status}}</p>
 					{% if party_request.status == "APPROVED" %}
-					<p>Lokacija partya: {{ party.location}} </p>
+					<p>Party location: {{ party.location}} </p>
 					{% endif %}
 					{% endif %}
 					{% else %}
-					<p><a href="{% url 'login' %}">Prijavi se</a> kako bi mogao pristupiti partiju</p>
+					<p><a href="{% url 'login' %}">Login</a> if you want to join party</p>
 					{% endif %}
 					{% endif %}
 			</div>
@@ -104,8 +104,8 @@
 			<p style="padding-left:10px;">{{ req.text }}</p>
 			<form action="{% url 'app:requestDecision' req.id %}" method="post">
 				<div class="d-flex justify-content-start">
-					<input type="submit" class="btn btn-primary" name="decision" value="Odobri" style="margin:5px;">
-					<input type="submit" class="btn btn-danger" name="decision" value="Odbij" style="margin:5px;">
+					<input type="submit" class="btn btn-primary" name="decision" value="Approve" style="margin:5px;">
+					<input type="submit" class="btn btn-danger" name="decision" value="Decline" style="margin:5px;">
 					{% csrf_token %}
 				</div>
 			</form>
@@ -114,7 +114,7 @@
 		{% endfor %}
 		{% else %}
 		<div class="card">
-			<p style="font-size:20px;">Nema trenutno zahjteva</p>
+			<p style="font-size:20px;">No active requests</p>
 		</div>
 		{% endif %}
 	</div>

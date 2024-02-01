@@ -11,15 +11,15 @@
           width="200px"
           style="align-self: center"
         />
-        <label class="mt-2">Ime Prezime:</label>
+        <label class="mt-2">First and last name:</label>
         <h4>{{ user_data.first_name }} {{ user_data.last_name }}</h4>
-        <label class="mt-2">Datum rođenja:</label>
+        <label class="mt-2">Date of birth:</label>
         <h4>{{ user_data.date_of_birth }}</h4>
-        <label class="mt-2">Spol:</label>
+        <label class="mt-2">Gender:</label>
         <h4>{{ user_data.gender }}</h4>
-        <label class="mt-2">Ukupno aftera održano:</label>
+        <label class="mt-2">Number of helded parties:</label>
         <h4>{{ total_parties }}</h4>
-        <label class="mt-2">Prosječna ocjena svih partija:</label>
+        <label class="mt-2">Average party rating:</label>
         <h4>{{ average_rating }}</h4>
       </div>
     </div>
@@ -36,7 +36,7 @@
             aria-controls="pills-current-parties"
             aria-selected="true"
           >
-            Trenutni partiji
+            Active Parties
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -50,7 +50,7 @@
             aria-controls="pills-previous"
             aria-selected="false"
           >
-            Prethodni partiji
+            Held Parties
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -64,7 +64,7 @@
             aria-controls="pills-my"
             aria-selected="false"
           >
-            Moja sudjelovanja
+            Participated Parties
           </button>
         </li>
       </ul>
@@ -101,14 +101,14 @@
                     width="200px"
                   />
                   <div style="margin-left: 10px">
-                    <p>Naslov: {{party.party_details.title}}</p>
-                    <p>Zatvara se: {{party.party_details.closed_at}}</p>
+                    <p>Title: {{party.party_details.title}}</p>
+                    <p>Closed at: {{party.party_details.closed_at}}</p>
                     <p style="margin-bottom: 0">
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
                     <a href="{% url 'app:partyDetails' party.party_details.id %}">
-                      <div type="button" class="btn btn-primary">Detalji</div>
+                      <div type="button" class="btn btn-primary">Details</div>
                     </a>
                   </div>
                 </button>
@@ -149,7 +149,7 @@
                     <p>{{recension.rating}}/5</p>
                   </div>
                   {% empty %}
-                  <p>Trenutno nema recenzija za ovaj parti</p>
+                  <p>No recensions yet</p>
                   {% endfor %}
                 </div>
               </div>
@@ -185,14 +185,14 @@
                     width="200px"
                   />
                   <div style="margin-left: 10px">
-                    <p>Naslov: {{party.party_details.title}}</p>
-                    <p>Zatvara se: {{party.party_details.closed_at}}</p>
+                    <p>Title: {{party.party_details.title}}</p>
+                    <p>Closed at: {{party.party_details.closed_at}}</p>
                     <p style="margin-bottom: 0">
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
                     <a href="{% url 'app:partyDetails' party.party_details.id %}">
-                      <div type="button" class="btn btn-primary">Detalji</div>
+                      <div type="button" class="btn btn-primary">Details</div>
                     </a>
                   </div>
                 </button>
@@ -234,7 +234,7 @@
                     <p>{{recension.rating}}/5</p>
                   </div>
                   {% empty %}
-                  <p>Trenutno nema recenzija za ovaj parti</p>
+                  <p>No recensions yet</p>
                   {% endfor %}
                 </div>
               </div>
@@ -270,14 +270,14 @@
                     width="200px"
                   />
                   <div style="margin-left: 10px">
-                    <p>Naslov: {{party.party_details.title}}</p>
-                    <p>Zatvoren: {{party.party_details.closed_at}}</p>
+                    <p>Title: {{party.party_details.title}}</p>
+                    <p>Closed at: {{party.party_details.closed_at}}</p>
                     <p style="margin-bottom: 0">
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
                     <a href="{% url 'app:partyDetails' party.party_details.id %}">
-                      <div type="button" class="btn btn-primary">Detalji</div>
+                      <div type="button" class="btn btn-primary">Detalis</div>
                     </a>
                   </div>
                 </button>
@@ -319,7 +319,7 @@
                     <p>{{recension.rating}}/5</p>
                   </div>
                   {% empty %}
-                  <p>Trenutno nema recenzija za ovaj parti</p>
+                  <p>No recensions yet</p>
                   {% endfor %}
                 </div>
               </div>

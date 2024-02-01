@@ -25,26 +25,25 @@
 }
 
 .logout-btn {
-  background-color: #03045e;
+  background-color: rgb(55, 55, 255);
   color: white;
   border-radius: 5px;
 }
 
 .login-btn {
   margin: 10px;
-  color: green;
+  color: white;
   border-radius: 5px;
-  background-color: greenyellow;
-  padding: 5px;
-  font-weight: bold;
+  background-color: rgb(55, 55, 255);
+  padding: 10px;
 }
 
 .signup-btn {
   margin: 10px;
-  background-color: blue;
+  background-color: rgb(55, 55, 255);
   color: white;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
 }
 
 
@@ -64,7 +63,7 @@
 }
 
 .scrollable-div {
-  max-height: 200px; 
-  overflow-y: auto; 
-  padding: 10px; 
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
 }

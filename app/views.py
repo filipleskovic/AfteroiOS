@@ -164,7 +164,7 @@ def requestDecision(request, req_id):
     party_id = req.party_id.pk
     if request.method == "POST" and request.user.is_authenticated:
         inputvalue = request.POST.get("decision", None)
-        if inputvalue == "Odobri":
+        if inputvalue == "Approve":
             req.status = PartyRequest.APPROVED
             guest = PartyGuest(party_id=req.party_id, user_id=req.user_id)
             guest.save()
