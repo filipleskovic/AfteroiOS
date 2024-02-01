@@ -16,7 +16,8 @@ def base(request):
 
 
 def index(request):
-    context = {"parties": Party.objects.all()}
+    context = {"parties": Party.objects.all(),
+               "user":request.user}
     return render(request, "app/index.html", context)
 
 
@@ -51,6 +52,7 @@ def partyDetails(request, party_id):
         "requests": requests,
         "recensions": recensions,
         "form": form,
+        "numberOfPending":PartyRequest.objects.filter(party_id=party, status="PENDING")
     }
     return render(request, "app/partyDetails.html", context)
 
