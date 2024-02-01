@@ -1,16 +1,27 @@
-.jumbotron {
-    color: white;
-    background-image: url("https://cdn.wallpapersafari.com/93/57/Uy7zEv.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 20vh;
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  --surface: "#FFFFFF";
+  --card: "#DBDBDB"
 }
 
+.body-custom {
+  height: calc(100dvh-96px);
+}
+
+.jumbotron {
+  color: white;
+  background-image: url("https://cdn.wallpapersafari.com/93/57/Uy7zEv.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20vh;
+}
 
 .logout-form {
-    margin-top: 20px;
-    margin-right: 15px;
+  margin-top: 20px;
+  margin-right: 15px;
 }
 
 .logout-btn {
@@ -20,25 +31,39 @@
 }
 
 .login-btn {
-    margin: 10px;
-    color: green;
-    border-radius: 5px;
-    background-color: greenyellow;
-    padding: 5px;
-    font-weight: bold;
+  margin: 10px;
+  color: green;
+  border-radius: 5px;
+  background-color: greenyellow;
+  padding: 5px;
+  font-weight: bold;
 }
 
 .signup-btn {
-    margin: 10px;
-    background-color: blue;
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
+  margin: 10px;
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .greeting {
-    width: 80px;
-    margin: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 20px;
+  width: 80px;
+  margin: 10px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #9da2a4;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
 }

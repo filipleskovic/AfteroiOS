@@ -1,8 +1,9 @@
 from asyncio.windows_events import NULL
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from app.models import Party, PartyPosters, PartyRequest, Recension, PartyGuest
+from app.models import Party, PartyPosters, PartyRequest, Recension, PartyGuest, User
 from django.urls import reverse
+from django.db.models import Count, Avg
 from . import forms
 
 
@@ -15,7 +16,8 @@ def base(request):
 
 
 def index(request):
-    context = {"parties": Party.objects.all()}
+    context = {"parties": Party.objects.all(),
+               "user":request.user}
     return render(request, "app/index.html", context)
 
 
@@ -50,12 +52,49 @@ def partyDetails(request, party_id):
         "requests": requests,
         "recensions": recensions,
         "form": form,
+        "numberOfPending":PartyRequest.objects.filter(party_id=party, status="PENDING")
     }
     return render(request, "app/partyDetails.html", context)
 
 
 def userProfile(request, user_id):
-    context = {}
+    user_data = get_object_or_404(User, pk=user_id)
+    parties = Party.objects.filter(created_by=user_id)
+    total_parties = parties.count()
+    user_recensions = Recension.objects.filter(party_id__in=parties)
+    average_rating = user_recensions.aggregate(Avg("rating"))["rating__avg"]
+
+    previous_parties = user_data.get_previous_parties()
+    current_parties = user_data.get_current_parties()
+
+    previous_parties_dto = []
+
+    for party in previous_parties:
+        previous_parties_dto.append(
+            {
+                "party_details": party,
+                "recensions": Recension.objects.filter(party_id=party.id),
+            }
+        )
+
+    current_parties_dto = []
+
+    for party in current_parties:
+        current_parties_dto.append(
+            {
+                "party_details": party,
+                "recensions": Recension.objects.filter(party_id=party.id),
+            }
+        )
+
+    context = {
+        "user_data": user_data,
+        "parties": parties,
+        "total_parties": total_parties,
+        "average_rating": average_rating,
+        "previous_parties": previous_parties_dto,
+        "current_parties": current_parties_dto,
+    }
     return render(request, "app/profile.html", context)
 
 

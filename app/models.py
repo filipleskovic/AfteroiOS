@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils import timezone
 from email.policy import default
 from django.db import models
@@ -29,7 +29,16 @@ class User(AbstractUser):
         related_name="afterios_permissions",
         help_text="Specific permissions for this user.",
     )
+    
+    def get_previous_parties(self):
+        current_datetime = datetime.now()
+        previous_parties = Party.objects.filter(created_by=self, closed_at__lt=current_datetime)
+        return previous_parties
 
+    def get_current_parties(self):
+        current_datetime = datetime.now()
+        previous_parties = Party.objects.filter(created_by=self, closed_at__gt=current_datetime)
+        return previous_parties
 
 class PartyPosters(models.Model):
     party_url = models.CharField(max_length=128)

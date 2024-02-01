@@ -1,6 +1,6 @@
 {% extends 'app/base.html' %} {% block content %}
-<div class="d-flex bd-highlight">
-	<div class="p-2 flex-fill bd-highlight">
+  <div class="d-flex justify-content-center">
+	<div class="p-2 flex-fill bd-highlight" style="max-width: 500px; margin:20px;">
 		<div class="card">
 			<img src="{{ party.party_poster_fk.party_url }}" class="card-img-top" alt="..." />
 			<h2 class="card-title mt-2" style="margin-left: 10px">
@@ -71,22 +71,30 @@
 		</div>
 	</div>
 	{% if user == party.created_by %}
-	<div class="p-2 flex-fill bd-highlight">
+	<div class="p-2 flex-fill bd-highlight" style="max-width: 400px; margin:20px;">
+		{% if numberOfPending %}
 		{% for req in requests %}
 		{% if req.status == "PENDING" %}
-		<div class="card">
-			<p>{{ req.user_id.username }}</p>
-			<p>{{ req.text }}</p>
+		<div class="card" style="margin-bottom:20px">
+			<a href ="{% url 'app:profile' req.user_id.pk %}
+			"style="padding-left:10px; font-size:30px;">
+			{{ req.user_id.username}}</a>
+			<p style="padding-left:10px;">{{ req.text }}</p>
 			<form action="{% url 'app:requestDecision' req.id %}" method="post">
-				<div style="display: flex;">
-					<input type="submit" class="btn btn-success" name="decision" value="Odobri">
-					<input type="submit" class="btn btn-warning" name="decision" value="Odbij">
+				<div class="d-flex justify-content-start">
+					<input type="submit" class="btn btn-primary" name="decision" value="Odobri" style="margin:5px;">
+					<input type="submit" class="btn btn-danger" name="decision" value="Odbij"  style="margin:5px;">
 					{% csrf_token %}
 				</div>
 			</form>
 		</div>
 		{% endif %}
 		{% endfor %}
+		{% else %}
+		<div class="card">
+		<p style="font-size:20px;">Nema trenutno zahjteva</p>
+		</div>
+		{% endif %}
 	</div>
 	{% endif %}
 	{% endblock %}
