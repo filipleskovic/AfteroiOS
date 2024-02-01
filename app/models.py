@@ -1,4 +1,5 @@
 from datetime import timedelta, datetime
+from django.forms import ValidationError
 from django.utils import timezone
 from email.policy import default
 from django.db import models
@@ -68,6 +69,10 @@ class Party(models.Model):
     location = models.CharField(max_length=128)
     party_poster_fk = models.ForeignKey(PartyPosters, on_delete=models.CASCADE)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def clean(self):
+        if self.closed_at <= self.starts_at:
+            raise ValidationError({'closed_at': 'Closed time must be later than starts time'})
 
     def is_finished(self):
         return timezone.now() + timedelta(hours=1) > self.closed_at
