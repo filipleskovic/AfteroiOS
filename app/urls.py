@@ -12,6 +12,7 @@ urlpatterns = [
     path('editParty/<int:party_id>', views.editParty, name="editParty"),
     path("<int:party_id>/recension/new/", views.new_recension, name="new_recension"),
     path("<int:party_id>/request/new/", views.new_request, name="new_request"),
+    path('<int:party_id>/request/deny/', views.deny_request, name="deny_request"),
     path(
         "<int:req_id>/request/decision/",
         views.requestDecision,

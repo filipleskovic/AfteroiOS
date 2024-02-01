@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
@@ -25,9 +25,9 @@
 }
 
 .logout-btn {
-    background-color: #03045e;
-    color: white;
-    border-radius: 5px;
+  background-color: #03045e;
+  color: white;
+  border-radius: 5px;
 }
 
 .login-btn {
@@ -47,12 +47,6 @@
   padding: 5px;
 }
 
-.greeting {
-  width: 80px;
-  margin: 10px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: 20px;
-}
 
 ::-webkit-scrollbar {
   width: 15px;
@@ -61,6 +55,7 @@
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #9da2a4;
   border-radius: 20px;

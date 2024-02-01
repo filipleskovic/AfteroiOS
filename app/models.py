@@ -29,17 +29,19 @@ class User(AbstractUser):
         related_name="afterios_permissions",
         help_text="Specific permissions for this user.",
     )
-    
+
     def get_previous_parties(self):
         current_datetime = datetime.now()
-        previous_parties = Party.objects.filter(created_by=self, closed_at__lt=current_datetime)
+        previous_parties = Party.objects.filter(
+            created_by=self, closed_at__lt=current_datetime)
         return previous_parties
 
     def get_current_parties(self):
         current_datetime = datetime.now()
-        previous_parties = Party.objects.filter(created_by=self, closed_at__gt=current_datetime)
+        previous_parties = Party.objects.filter(
+            created_by=self, closed_at__gt=current_datetime)
         return previous_parties
-    
+
     def get_attended_parties(self):
         current_datetime = datetime.now()
         attended_parties = Party.objects.filter(
@@ -47,6 +49,7 @@ class User(AbstractUser):
             partyguest__user_id=self
         ).distinct()
         return attended_parties
+
 
 class PartyPosters(models.Model):
     party_url = models.CharField(max_length=128)
