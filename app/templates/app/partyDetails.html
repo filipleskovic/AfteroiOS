@@ -28,10 +28,9 @@
 					{{party.closed_at}}
 				</p>
 				{% if party.is_finished %}
-				<p>Party je završio!<br>{% if user != party.created_by %}Ostavi recenziju:</p>
+				<p>Party je završio!<br>{% if user != party.created_by and user == guest.user_id %}Ostavi recenziju:</p>
 				{% if user.is_authenticated %}
 				<form action="{% url 'app:new_recension' party.id %}" method="post" accept-charset="utf-8" style="margin:20px 0px 20px;">
-					
 					<div class="d-flex bd-highlight">
 						<div class="p-0 flex-grow-1 bd-highlight">
 							<input type="text" class="form-control" aria-label="Sizing example input"
