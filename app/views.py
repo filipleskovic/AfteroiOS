@@ -31,16 +31,6 @@ def partyDetails(request, party_id):
         ).first()
     else:
         party_request = False
-    if request.method == "POST" and request.user.is_authenticated:
-        form = forms.RecensionForm(request.POST)
-        if form.is_valid():
-            saved_recension = form.save(commit=False)
-            saved_recension.user_id = request.user
-            saved_recension.party_id = party
-            saved_recension.save()
-            return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
-    else:
-        form = forms.RecensionForm()
     if not party.is_finished():
         recensions = None
     else:
@@ -51,11 +41,36 @@ def partyDetails(request, party_id):
         "party_request": party_request,
         "requests": requests,
         "recensions": recensions,
-        "form": form,
         "numberOfPending":PartyRequest.objects.filter(party_id=party, status="PENDING")
     }
     return render(request, "app/partyDetails.html", context)
 
+def new_request(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    if request.method == "POST" and request.user.is_authenticated:
+        text = request.POST["text"]
+        partyReq = PartyRequest(
+            party_id=party,
+            user_id=request.user,
+            status=PartyRequest.PENDING,
+            text=text,
+        )
+        partyReq.save()
+    return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+
+def new_recension(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    if request.method == "POST" and request.user.is_authenticated:
+        text=request.POST["text"]
+        ocjena=request.POST["ocjena"]
+        partyRecension=Recension(
+            party_id=party,
+            user_id=request.user,
+            text=text,
+            rating=ocjena
+        )
+        partyRecension.save()
+    return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
 
 def userProfile(request, user_id):
     user_data = get_object_or_404(User, pk=user_id)
@@ -96,20 +111,6 @@ def userProfile(request, user_id):
         "current_parties": current_parties_dto,
     }
     return render(request, "app/profile.html", context)
-
-
-def new_request(request, party_id):
-    party = get_object_or_404(Party, pk=party_id)
-    if request.method == "POST" and request.user.is_authenticated:
-        text = request.POST["text"]
-        partyReq = PartyRequest(
-            party_id=party,
-            user_id=request.user,
-            status=PartyRequest.PENDING,
-            text=text,
-        )
-        partyReq.save()
-    return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
 
 
 def createParty(request):
