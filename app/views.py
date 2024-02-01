@@ -29,8 +29,10 @@ def partyDetails(request, party_id):
         party_request = PartyRequest.objects.filter(
             user_id=user, party_id=party_id
         ).first()
+        guest = PartyGuest.objects.filter(party_id=party, user_id=user).first()
     else:
         party_request = False
+        guest = None
     if not party.is_finished():
         recensions = None
     else:
@@ -41,7 +43,7 @@ def partyDetails(request, party_id):
         "requests": requests,
         "recensions": recensions,
         "numberOfPending":PartyRequest.objects.filter(party_id=party, status="PENDING"),
-        "guest":PartyGuest.objects.filter(party_id=party, user_id=user).first()
+        "guest": guest,
     }
     return render(request, "app/partyDetails.html", context)
 

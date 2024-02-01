@@ -68,7 +68,6 @@
 				{% else %}
 				{% if user.is_authenticated %}
 				{% if party.created_by == user %}
-				<p>Ne mozes slati req na svoj party</p>
 				<form action="{% url 'app:editParty' party.id %}" method="get">
 					<input type="submit" class="btn btn-primary" name="uredi" value="Uredi party" style="margin:5px;">
 					{% csrf_token %}

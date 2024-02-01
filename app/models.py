@@ -81,7 +81,10 @@ class Party(models.Model):
         return f"{self.title}"
 
     def description_snippet(self):
-        return f"{self.description[:50]}..."
+        if len(self.description) > 40:
+            return f"{self.description[:40]}..."
+        return self.description
+
 
 class Recension(models.Model):
     party_id = models.ForeignKey(Party, on_delete=models.CASCADE)
