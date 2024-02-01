@@ -1,8 +1,12 @@
-{% extends 'app/base.html' %} {% block extrahead %} {{ form.media }} 
+{% extends 'app/base.html' %} {% block extrahead %} {{ form.media }}
 {% endblock extrahead %} {% block content %}
 <div class="row">
   <div class="col-md-12 my-4">
+    {% if form.instance.id %}
+    <h2 class="text-center">Edit party</h2>
+    {% else %}
     <h2 class="text-center">Submit new party</h2>
+    {% endif %}
   </div>
 </div>
 <form method="post" accept-charset="utf-8">
@@ -11,16 +15,17 @@
   <div class="row">
     <div class="col-md-8 mx-auto my-4">
       {% include 'includes/bs_form.html' with form=form %}
-      <div
-        class="d-inline-flex align-content-between flex-row flex-wrap"
-        style="height: 450px; padding-top: 40px"
-      >
-        {% for poster in posters %}
-        <p class="h5" style="padding: 70px 5px">poster num {{ poster.id }}:</p>
-        <img src="{{ poster.party_url }}" alt="partyImage" />
-        {% endfor %}
+      <div class="content container-md mb-2" style="margin-top: 10px;">
+        <div class="row row-cols-4">
+          {% for poster in posters %}
+          <div class="col" style="padding-top: 20px;">
+            <p class="h5">poster num {{ poster.id }}:</p>
+            <img src="{{ poster.party_url }}" alt="partyImage" style="height: 20vh; width: 100%;"/>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      <input type="submit" value="Submit" class="btn btn-primary my-3" />
+      <input type="submit" value="Submit" class="btn btn-primary my-3 mx-auto d-block col-md-2" />
     </div>
   </div>
 </form>

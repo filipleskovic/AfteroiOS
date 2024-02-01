@@ -195,4 +195,4 @@ def editParty(request, party_id):
             party.party_poster_fk = form.cleaned_data['party_poster_fk']
             party.save()
             return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
-
+    return render(request, "app/partyDetails.html")
