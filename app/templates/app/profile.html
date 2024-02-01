@@ -107,6 +107,9 @@
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
+                    <a href="{% url 'app:partyDetails' party.party_details.id %}">
+                      <div type="button" class="btn btn-primary">Detalji</div>
+                    </a>
                   </div>
                 </button>
               </h2>
@@ -188,6 +191,9 @@
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
+                    <a href="{% url 'app:partyDetails' party.party_details.id %}">
+                      <div type="button" class="btn btn-primary">Detalji</div>
+                    </a>
                   </div>
                 </button>
               </h2>
@@ -237,10 +243,10 @@
           </div>
         </div>
         <div
-          class="tab-pane fade show active"
-          id="pills-my-parties"
+          class="tab-pane fade"
+          id="pills-my"
           role="tabpanel"
-          aria-labelledby="pills-my-parties-tab"
+          aria-labelledby="pills-my-tab"
         >
           <div class="accordion" id="accordionExample">
             {% for party in attended_parties %}
@@ -265,11 +271,14 @@
                   />
                   <div style="margin-left: 10px">
                     <p>Naslov: {{party.party_details.title}}</p>
-                    <p>Zatvara se: {{party.party_details.closed_at}}</p>
+                    <p>Zatvoren: {{party.party_details.closed_at}}</p>
                     <p style="margin-bottom: 0">
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
+                    <a href="{% url 'app:partyDetails' party.party_details.id %}">
+                      <div type="button" class="btn btn-primary">Detalji</div>
+                    </a>
                   </div>
                 </button>
               </h2>
@@ -298,7 +307,8 @@
                     <div
                       style="
                         width: 100%;
-                        height: 150px;
+                        max-height: 150px;
+                        overflow-y: auto;
                         border: 1px solid black;
                         border-radius: 5px;
                         padding: 10px;
