@@ -40,7 +40,8 @@ def partyDetails(request, party_id):
         "party_request": party_request,
         "requests": requests,
         "recensions": recensions,
-        "numberOfPending": PartyRequest.objects.filter(party_id=party, status="PENDING")
+        "numberOfPending":PartyRequest.objects.filter(party_id=party, status="PENDING"),
+        "guest":PartyGuest.objects.filter(party_id=party, user_id=user).first()
     }
     return render(request, "app/partyDetails.html", context)
 
