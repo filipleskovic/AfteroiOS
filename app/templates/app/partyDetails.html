@@ -72,7 +72,8 @@
 					<input type="submit" class="btn btn-primary" name="uredi" value="Uredi party" style="margin:5px;">
 					{% csrf_token %}
 				</form>
-				{% elif not party_request and party.created_by != user and party.partyguest_set.count < party.total_allowed_guest %} <form action="{% url 'app:new_request' party.id %}" method="post">
+				{% elif not party_request and party.created_by != user and party.partyguest_set.count < party.total_allowed_guest %} 
+				<form action="{% url 'app:new_request' party.id %}" method="post">
 					<input type="text" class="form-control" aria-label="Sizing example input"
 						aria-describedby="inputGroup-sizing-default" name="text" id="" style="margin-bottom:10px">
 					<input type="submit" class="btn btn-primary" value="Podnesi zahtjev">
@@ -80,10 +81,21 @@
 					</form>
 					{% elif party.partyguest_set.count >= party.total_allowed_guest %}
 					<p style="font-size: 25px; font-weight: 600; color: red;">POPUNJENO!</p>
+					{% if party_request.status == "APPROVED" %}
+					<p>Lokacija partya: {{ party.location}} </p>
+					<form action="{% url 'app:deny_request' party.id %}" method="post">
+						<input type="submit" class="btn btn-danger" value="Otkaži dolazak"/>
+						{% csrf_token %}
+					</form>
+					{% endif %}
 					{% else %}
 					<p>Status zahtjeva: {{party_request.status}}</p>
 					{% if party_request.status == "APPROVED" %}
 					<p>Lokacija partya: {{ party.location}} </p>
+					<form action="{% url 'app:deny_request' party.id %}" method="post">
+						<input type="submit" class="btn btn-danger" value="Otkaži dolazak"/>
+						{% csrf_token %}
+					</form>
 					{% endif %}
 					{% endif %}
 					{% else %}
