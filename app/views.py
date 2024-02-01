@@ -17,7 +17,7 @@ def base(request):
 
 def index(request):
     context = {"parties": Party.objects.all(),
-               "user":request.user}
+               "user": request.user}
     return render(request, "app/index.html", context)
 
 
@@ -37,13 +37,13 @@ def partyDetails(request, party_id):
         recensions = Recension.objects.filter(party_id=party)
     context = {
         "party": party,
-        "is_authenticated": user.is_authenticated,
         "party_request": party_request,
         "requests": requests,
         "recensions": recensions,
-        "numberOfPending":PartyRequest.objects.filter(party_id=party, status="PENDING")
+        "numberOfPending": PartyRequest.objects.filter(party_id=party, status="PENDING")
     }
     return render(request, "app/partyDetails.html", context)
+
 
 def new_request(request, party_id):
     party = get_object_or_404(Party, pk=party_id)
@@ -58,12 +58,13 @@ def new_request(request, party_id):
         partyReq.save()
     return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
 
+
 def new_recension(request, party_id):
     party = get_object_or_404(Party, pk=party_id)
     if request.method == "POST" and request.user.is_authenticated:
-        text=request.POST["text"]
-        ocjena=request.POST["ocjena"]
-        partyRecension=Recension(
+        text = request.POST["text"]
+        ocjena = request.POST["ocjena"]
+        partyRecension = Recension(
             party_id=party,
             user_id=request.user,
             text=text,
@@ -71,6 +72,18 @@ def new_recension(request, party_id):
         )
         partyRecension.save()
     return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+
+def deny_request(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    user = request.user
+    requests = PartyRequest.objects.filter(party_id=party)
+    guests = PartyGuest.objects.filter(party_id=party)
+    if request.method == "POST" and request.user.is_authenticated:
+        guests.filter(user_id=user).delete()
+        requests.filter(user_id=user).delete()
+    return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+    
+
 
 def userProfile(request, user_id):
     user_data = get_object_or_404(User, pk=user_id)
@@ -138,7 +151,6 @@ def createParty(request):
     posters = PartyPosters.objects.all()
     context = {
         "form": form,
-        "action": "create",
         "posters": posters,
     }
     return render(request, "app/createParty.html", context)
@@ -156,5 +168,4 @@ def requestDecision(request, req_id):
         else:
             req.status = PartyRequest.DECLINED
         req.save()
-    context = {}
     return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
