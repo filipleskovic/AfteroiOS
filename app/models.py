@@ -9,7 +9,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    date_of_birth = models.DateTimeField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=32)
     avatar_url = models.CharField(max_length=128)
     groups = models.ManyToManyField(
