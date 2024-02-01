@@ -158,3 +158,29 @@ def requestDecision(request, req_id):
         req.save()
     context = {}
     return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+
+
+
+def editParty(request, party_id):
+    party= get_object_or_404(Party, id=party_id)
+    posters = PartyPosters.objects.all()
+    if request.user.is_authenticated and request.method == "GET":
+        form = forms.PartyForm(instance=party)
+        context = {
+        "form": form,
+        "posters": posters,
+    }
+        return render(request, "app/createParty.html", context)
+    if request.user.is_authenticated and request.method == "POST":
+        form = forms.PartyForm(request.POST)
+        if form.is_valid():
+            party.title = form.cleaned_data['title']
+            party.total_allowed_guest = form.cleaned_data['total_allowed_guest']
+            party.description = form.cleaned_data['description']
+            party.starts_at = form.cleaned_data['starts_at']
+            party.closed_at = form.cleaned_data['closed_at']
+            party.location = form.cleaned_data['location']
+            party.party_poster_fk = form.cleaned_data['party_poster_fk']
+            party.save()
+            return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+
