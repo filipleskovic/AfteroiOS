@@ -20,7 +20,11 @@
         <label class="mt-2">Ukupno aftera održano:</label>
         <h4>{{ total_parties }}</h4>
         <label class="mt-2">Prosječna ocjena svih partija:</label>
+        {% if average_rating == None %}
+        <p>Trenutno nema recenzija</p>
+        {% else %}
         <h4>{{ average_rating }}</h4>
+        {% endif %}
       </div>
     </div>
     <div class="grid-item">
@@ -107,7 +111,9 @@
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
-                    <a href="{% url 'app:partyDetails' party.party_details.id %}">
+                    <a
+                      href="{% url 'app:partyDetails' party.party_details.id %}"
+                    >
                       <div type="button" class="btn btn-primary">Detalji</div>
                     </a>
                   </div>
@@ -154,6 +160,8 @@
                 </div>
               </div>
             </div>
+            {% empty %}
+            <p>Nema rezultata</p>
             {% endfor %}
           </div>
         </div>
@@ -191,7 +199,9 @@
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
-                    <a href="{% url 'app:partyDetails' party.party_details.id %}">
+                    <a
+                      href="{% url 'app:partyDetails' party.party_details.id %}"
+                    >
                       <div type="button" class="btn btn-primary">Detalji</div>
                     </a>
                   </div>
@@ -239,6 +249,8 @@
                 </div>
               </div>
             </div>
+            {% empty %}
+            <p>Nema razultata</p>
             {% endfor %}
           </div>
         </div>
@@ -276,7 +288,9 @@
                       By: {{party.party_details.created_by.first_name}}
                       {{party.party_details.created_by.last_name}}
                     </p>
-                    <a href="{% url 'app:partyDetails' party.party_details.id %}">
+                    <a
+                      href="{% url 'app:partyDetails' party.party_details.id %}"
+                    >
                       <div type="button" class="btn btn-primary">Detalji</div>
                     </a>
                   </div>
@@ -324,6 +338,8 @@
                 </div>
               </div>
             </div>
+            {% empty %}
+            <p>Nema razultata</p>
             {% endfor %}
           </div>
         </div>
