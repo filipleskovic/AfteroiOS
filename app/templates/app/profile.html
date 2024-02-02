@@ -17,10 +17,13 @@
         <h4>{{ user_data.date_of_birth }}</h4>
         <label class="mt-2">Gender:</label>
         <h4>{{ user_data.gender }}</h4>
-        <label class="mt-2">Number of helded parties:</label>
+        <label class="mt-2">Number of held parties:</label>
         <h4>{{ total_parties }}</h4>
         <label class="mt-2">Average party rating:</label>
+        {% if average_rating %}
         <h4>{{ average_rating }}</h4>
+        {% else %}
+        <h4>No recensions yet</h4>
         {% endif %}
       </div>
     </div>
@@ -156,7 +159,7 @@
               </div>
             </div>
             {% empty %}
-            <p>Nema rezultata</p>
+            <p>No results</p>
             {% endfor %}
           </div>
         </div>
@@ -243,7 +246,7 @@
               </div>
             </div>
             {% empty %}
-            <p>Nema razultata</p>
+            <p>No results</p>
             {% endfor %}
           </div>
         </div>
@@ -330,7 +333,7 @@
               </div>
             </div>
             {% empty %}
-            <p>Nema razultata</p>
+            <p>No results</p>
             {% endfor %}
           </div>
         </div>

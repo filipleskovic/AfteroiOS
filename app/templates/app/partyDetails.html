@@ -81,9 +81,9 @@
 					</form>
 					{% elif party.partyguest_set.count >= party.total_allowed_guest %}
 					{% if party_request.status == "APPROVED" %}
-					<p>Lokacija partya: {{ party.location}} </p>
+					<p>Party location: {{ party.location}} </p>
 					<form action="{% url 'app:deny_request' party.id %}" method="post">
-						<input type="submit" class="btn btn-danger" value="Otkaži dolazak"/>
+						<input type="submit" class="btn btn-danger" value="Cancel arrival"/>
 						{% csrf_token %}
 					</form>
 					{% endif %}
