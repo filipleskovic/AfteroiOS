@@ -1,6 +1,6 @@
 from asyncio.windows_events import NULL
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from app.models import Party, PartyPosters, PartyRequest, Recension, PartyGuest, User
 from django.urls import reverse
 from django.db.models import Count, Avg
@@ -60,6 +60,7 @@ def new_request(request, party_id):
         )
         partyReq.save()
     return HttpResponseRedirect(reverse("app:partyDetails", args=(party_id,)))
+
 
 
 def new_recension(request, party_id):

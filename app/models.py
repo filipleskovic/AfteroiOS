@@ -75,7 +75,7 @@ class Party(models.Model):
             raise ValidationError({'closed_at': 'Closed time must be later than starts time'})
 
     def is_finished(self):
-        return timezone.now() + timedelta(hours=1) > self.closed_at
+        return timezone.now()  + timedelta(hours=2) > self.closed_at
 
     def __str__(self) -> str:
         return f"{self.title}"

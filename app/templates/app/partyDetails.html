@@ -103,6 +103,7 @@
 	</div>
 	{% if user == party.created_by %}
 	<div class="p-2 flex-fill bd-highlight" style="max-width: 400px; margin:20px;">
+		{% if party.partyguest_set.count < party.total_allowed_guest %}
 		{% if numberOfPending %}
 		{% for req in requests %}
 		{% if req.status == "PENDING" %}
@@ -124,6 +125,7 @@
 		<div class="card">
 			<p style="font-size:20px;">No active requests</p>
 		</div>
+		{% endif %}
 		{% endif %}
 	</div>
 	{% endif %}
