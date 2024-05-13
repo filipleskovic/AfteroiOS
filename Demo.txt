@@ -1,0 +1,21 @@
+pip install django
+python manage.py runserver
+
+Svi accounti:Marko1234,Ivan1234,Luka1234,Pero1234
+Lozinka:Filip1234
+
+Imamo Pun party na koji se više ne može slati request(napravio Ivan1234)
+
+Imamo kartanje bele (napravio Luka1234), na tom party-u možete potvrditi ili odbiti zahjteve. 
+Status zahtjeva vidi se u party details na accountu koji je poslao zahjev.
+
+Završene partye možete vidjeti na profilima od svih sudionika i vlasnika partya. Imamo jedan (napravio Pero1234) 
+i svi njegovi sudionici mogu ostaviti ostaviti recenziju partya. Jedino Marko1234 nije, možete ostaviti u svrhu testa.
+Sve recenzije su odma vidljive. Ocjene vrijede od 1-5.
+
+Imamo aktivan BIG Party, na kojeg možete slati zahjtev (mogu poslati Luka,Ivan i Pero, Marko ne može jer je vlasnik partya)
+
+Nadam se da sam sve pokrio kombinacije. Ako ima nekih bugova i zamjerki, samo recite jer ipak je to prvi projekt
+na kojem sam radio
+
+Filip Lešković
